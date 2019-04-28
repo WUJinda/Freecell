@@ -1,0 +1,17 @@
+#include "Tableau.h"
+
+using namespace std;
+using namespace cimg_library;
+
+int main()
+{
+
+
+	Tableau t;
+	t.drawTableau();
+
+	
+
+
+	return 0;
+}
