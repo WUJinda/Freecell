@@ -22,23 +22,23 @@ void Tableau::drawTableau()
 	for (int i = 0; i < 4; i++) grid.draw_rectangle(108 + 91 * i, 30, 179 + 91 * i, 126, gray, 1);
 	for (int i = 0; i < 4; i++) grid.draw_rectangle(628 + 91 * i, 30, 699 + 91 * i, 126, gray, 1);
 	
-	for (int i = 0; i < 9; i++)
-	{
-		vector<Card> tempvec;
-		for (int j = 0; j < 4; j++)
-		{
-			Card tempcard;
-			tempcard.setElements(i,'H');
-			tempvec.push_back(tempcard);
-		}
-		tableau_.push_back(tempvec);
-	}
+	//for (int i = 0; i < 9; i++)
+	//{
+	//	vector<Card> tempvec;
+	//	for (int j = 0; j < 4; j++)
+	//	{
+	//		Card tempcard;
+	//		tempcard.setElements(i,'H');
+	//		tempvec.push_back(tempcard);
+	//	}
+	//	tableau_.push_back(tempvec);
+	//}
 	
 	
 
-	for (int i = 0; i < tableau_.size(); i++)
+	for (int i = 0; i < (int)tableau_.size(); i++)
 	{
-		for (int j = 0; j < tableau_[i].size(); j++)
+		for (int j = 0; j < (int)tableau_[i].size(); j++)
 		{
 			
 			grid.draw_image(105 + 90 * i, 200 + 20 * j, tableau_[i][j].getImg());
@@ -51,30 +51,8 @@ void Tableau::drawTableau()
 }
 
 void Tableau::randomize()
+
 {
-
-}
-
-void Tableau::setDefaults()
-{
-
-	vector<Card> vecDefault;
-	//for (int i = 0; i < 13; i++)
-	//{
-	//	vector<Card> tempvec;
-	//	tempvec[i].setElements(i+1, 'H');
-	//	vecDefault[i].push_back(tempvec[i]);
-
-	//}
-
-
-	//
-	//for (int i = 1; i <= 13; i++)  vecDefault[i].setElements(i, 'S');
-	//for (int i = 1; i <= 13; i++)  vecDefault[i].setElements(i, 'C');
-	//for (int i = 1; i <= 13; i++)  vecDefault[i].setElements(i, 'D');
-
-	
-
 
 	Card c1H;
 	c1H.setElements(1, 'H');
@@ -184,7 +162,8 @@ void Tableau::setDefaults()
 	Card cKD;
 	cKD.setElements(13, 'D');
 
-	Card tab[52] = {
+
+	vector<Card> vecDefault = {
 		c1C,c1D,c1H,c1S,
 		c2C,c2D,c2H,c2S,
 		c3C,c3D,c3H,c3S,
@@ -200,7 +179,47 @@ void Tableau::setDefaults()
 		cKC,cKD,cKH,cKS,
 	};
 
-	vecDefault.push_back(tab);
+	srand(time(NULL));
+
+
+	for (int i = 0; i < 52; i++)
+	{
+		Card tempcard;
+		int num = 0;
+		num = rand() % 52;
+
+		tempcard = vecDefault[i];
+		vecDefault[i] = vecDefault[num];
+		vecDefault[num] = tempcard;
+
+	}
+
+	for (int i = 0; i < 52; i++)
+	{
+		vector<Card>::iterator it;
+		vector<vector<Card>>::iterator itt;
+		vector<Card> tempvec;
+		for (it = tempvec.begin(); it != tempvec.end(); it++)
+		{
+			tempvec.push_back(vecDefault[i]);
+			for (itt = tableau_.begin(); itt != tableau_.end(); itt++)
+			{
+				tableau_[i].push_back(tempvec[i]);
+			}
+
+		}
+
+	}
+
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 7; j++)
+		{
+			cout << tableau_[i][j].getFace()<<tableau_[i][j].getSuit()<<" ";
+		}
+		cout << endl;
+
+	}
 
 
 }
